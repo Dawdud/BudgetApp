@@ -1,11 +1,12 @@
 import React from 'react';
-const  Transactions= ({transactions, deleteTransaction}) => {
+const  Transactions= ({transactions, deleteTransaction, updateTransactions}) => {
     const transactionList=  transactions.length ?  (
-        transactions.map( transactions => {
+        transactions.map( (transactions, index) => {
         return (<div key={transactions.id}>
             <p> {transactions.name}</p>
             <p> {transactions.amount}</p>
             <p> {transactions.date}</p>
+            <button onClick={()=>{updateTransactions(index)}}>Edytuj</button>
             <button onClick={()=>{deleteTransaction(transactions.id)}}> usuń</button>
         </div>)
         })

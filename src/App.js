@@ -28,13 +28,24 @@ class App extends Component {
     this.setState({
       transactions
     })
+   
   }
+  updateTransactions= (index)=>{
+    let id= Math.random();
+    const transactions= [...this.state.transactions];
+    transactions[index]= {name:"kung-Fu", amount:90, id, date: '2019-05-30' };
+    this.setState({
+      transactions
+    })
+  }
+
   addTransaction = (transaction)=>{
     transaction.id= Math.random();
     let transactions= [...this.state.transactions, transaction];
     this.setState({
       transactions: transactions
     })
+    
    
   }
  
@@ -42,11 +53,11 @@ class App extends Component {
   return (
     <div className="budget-app container">
       <Header></Header>
-      <button type="button" onClick={this.showModal} data-target="modal1" class="btn modal-trigger indigo"> open </button>
+      <button type="button" onClick={this.showModal} data-target="modal1" className="btn modal-trigger indigo"> open </button>
       <Modal show={this.state.show} handleClose={this.hideModal}>
           <AddTransactions addTransaction={this.addTransaction} />
       </Modal>
-      <Transactions transactions={this.state.transactions} deleteTransaction={this.deleteTransaction}/>
+      <Transactions transactions={this.state.transactions} deleteTransaction={this.deleteTransaction} updateTransactions={this.updateTransactions}/>
     </div>
   );}
 }
