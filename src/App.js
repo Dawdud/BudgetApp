@@ -4,6 +4,7 @@ import Header from './header';
 import Modal from './Modal';
 import Transactions from './Transactions';
 import AddTransactions from'./AddTransaction';
+import EditTransactions from './EditTransaction';
 import './App.scss';
 
 class App extends Component {
@@ -12,13 +13,26 @@ class App extends Component {
       {id:1, name: 'hamburger', amount: 32, date:new Date().toLocaleString()},
       {id:2, name: 'pizza', amount: 12, date: new Date().toLocaleString()}
     ],
-    show:false
+    show:false, 
+    indexItem: 0,
   }
   showModal= ()=>{
     this.setState({show: true})
   }
   hideModal= () =>{
     this.setState({show: false})
+  }
+  updateTransaction= (updateTransaction)=>{
+  
+   let transactions= this.state.transactions.map(transaction => {return transaction.id===updateTransaction.id?updateTransaction: transaction})
+   
+   this.setState({
+     transactions
+   })
+
+   
+   
+  
   }
 
   deleteTransaction= (id)=>{
@@ -30,12 +44,11 @@ class App extends Component {
     })
    
   }
-  updateTransactions= (index)=>{
-    let id= Math.random();
-    const transactions= [...this.state.transactions];
-    transactions[index]= {name:"kung-Fu", amount:90, id, date: '2019-05-30' };
+   getTransactionIndex= (index)=>{
+    
+    
     this.setState({
-      transactions
+      indexItem: index,
     })
   }
 
@@ -55,9 +68,13 @@ class App extends Component {
       <Header></Header>
       <button type="button" onClick={this.showModal} data-target="modal1" className="btn modal-trigger indigo"> open </button>
       <Modal show={this.state.show} handleClose={this.hideModal}>
-          <AddTransactions addTransaction={this.addTransaction} />
+         <AddTransactions addTransaction={this.addTransaction} />
       </Modal>
-      <Transactions transactions={this.state.transactions} deleteTransaction={this.deleteTransaction} updateTransactions={this.updateTransactions}/>
+      <Transactions transactions={this.state.transactions} deleteTransaction={this.deleteTransaction} getTransactionIndex={this.getTransactionIndex}/>
+      
+      <EditTransactions transaction={this.state.transactions[this.state.indexItem] } updateTransaction={ this.updateTransaction }/>
+      
+
     </div>
   );}
 }
