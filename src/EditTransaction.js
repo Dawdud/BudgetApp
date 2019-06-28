@@ -4,15 +4,15 @@ class EditTransaction extends Component {
   constructor(props){
     super(props);
   this.state = {
-      id: props.transaction.id,
-      name: props.transaction.name,
-      amount: props.transaction.amount,
-      date:  props.transaction.date,
+      id:props.transaction.id,
+      name:props.transaction.name,
+      amount:props.transaction.amount,
+      date:props.transaction.date,
   };
 }
   
   componentDidUpdate(prevProps) {
-    if( this.props.transaction.id !== prevProps.transaction.id){
+    if(this.props.transaction && this.props.transaction.id !== prevProps.transaction.id){
     this.setState({
       id: this.props.transaction.id,
       name: this.props.transaction.name,
